@@ -29,7 +29,11 @@ pipeline {
                 deploy adapters: [tomcat9(credentialsId: 'tomcat', path: '', url: 'http://localhost:8082/')], contextPath: 'maven-web-application(Pipe01)', onFailure: false, war: '**/*war'
             }
 		}
+		stage('Nexus-Push'){
+		     steps{
+			 nexusPublisher nexusInstanceId: 'Releases', nexusRepositoryId: 'releases', packages: [[$class: 'MavenPackage', mavenAssetList: [[classifier: '', extension: '', filePath: 'C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\Project2\\dec-01\\webapp\\target\\webapp.war']], mavenCoordinate: [artifactId: 'maven-project', groupId: 'com.example.maven-project', packaging: 'war', version: '2.0']]]
+			 }
+		}	 
         }
         
    }
-
